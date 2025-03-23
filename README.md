@@ -1,49 +1,75 @@
-#Real-Time Hand-Controlled LEDs
 
-Project Idea
 
-The program detects the number formed by the hand, converts it to Binary, and then sends it to the Arduino using the SPI protocol between the camera and the Arduino. Once the data is received, the Arduino takes the binary values and converts them into Digital Signals to turn the LEDs on or off based on the received number.
+# 🎯 Real-Time Hand-Controlled LEDs  
 
-How It Works
 
-Capturing the Image: The camera is used to analyze hand movements using Mediapipe.
+## 📌 Project Overview  
 
-Number Recognition: The number formed by the hand is identified using a machine learning model.
+This project detects hand gestures using **computer vision**, converts the recognized number to **binary**, and sends it to an **Arduino via SPI** to control **LED lights** in real time.  
 
-Binary Conversion: The number is converted to its binary representation to determine the state of each LED.
+## 📖 Table of Contents  
+- [How It Works](#-how-it-works)  
+- [Requirements](#-requirements)  
+- [Setup and Usage](#-setup-and-usage)  
+- [Notes & Troubleshooting](#-notes--troubleshooting)  
 
-Data Transmission via SPI: The binary values are sent from the computer to the Arduino via the SPI protocol.
+## ⚙️ How It Works  
 
-LED Control: The Arduino receives the data and converts it into digital signals to control the LEDs accordingly.
+1️⃣ **Hand Tracking** - Uses a webcam and **Mediapipe** to track hand gestures.  
+2️⃣ **Number Recognition** - A trained model identifies the number formed by fingers.  
+3️⃣ **Binary Conversion** - The number is converted into a **3-bit binary** format.  
+4️⃣ **SPI Communication** - The data is sent from **Python to Arduino** using the **SPI protocol**.  
+5️⃣ **LED Control** - The Arduino receives the data and turns **LEDs ON/OFF** accordingly.  
 
-Requirements
+### 🔢 Binary LED Representation Example  
 
-Python with the following libraries:
+| Number | Binary | LED1 (Pin 13) | LED2 (Pin 12) | LED3 (Pin 11) |
+|---------|--------|---------------|---------------|---------------|
+| 0       | 000    | OFF           | OFF           | OFF           |
+| 1       | 010    | OFF           | ON            | OFF           |
+| 2       | 100    | ON            | OFF           | OFF           |
+| 3       | 110    | ON            | ON            | OFF           |
 
-opencv-python
+## 🛠 Requirements  
 
-mediapipe
+### 🔹 Software  
+- Python 3.8+  
+- Arduino IDE  
 
-numpy
+### 🔹 Python Libraries  
+```bash
+pip install opencv-python mediapipe numpy pickle pyserial
+```
 
-pickle
+### 🔹 Hardware  
+- **Arduino UNO/Nano**  
+- **3 LEDs** connected to **pins 11, 12, and 13**  
+- **USB Camera** for real-time hand detection  
 
-pyserial
+## 🚀 Setup and Usage  
 
-Arduino with 3 LEDs connected to pins 11, 12, 13.
+### 1️⃣ Upload Arduino Code  
+- Open the **Arduino IDE** and upload the provided sketch to your **Arduino board**.
 
-How to Run
+### 2️⃣ Run Python Script  
+```bash
+python inference_classifier.py
+```
 
-Run the Python script to process the video and send data to the Arduino.
+### 3️⃣ Perform Hand Gestures  
+- Place your hand in front of the camera.  
+- The system will recognize the **number** and **light up the LEDs** based on its binary representation.  
 
-Connect the Arduino to the computer and run its code.
+## ❗ Notes & Troubleshooting  
 
-Place your hand in front of the camera, and the system will recognize the number and light up the corresponding LEDs based on its binary representation.
+- Ensure **Arduino is connected** to the correct **COM port** (Modify it in `inference_classifier.py`).  
+- The camera should have **good lighting** to improve detection accuracy.  
+- If the LEDs are **not responding**, check the **wiring** and **SPI settings**.  
 
-Notes
+---
 
-Ensure that the COM port is correctly set in both the Python and Arduino code.
+### 📜 License  
+This project is licensed under the **MIT License**.  
 
-Make sure the camera is functioning properly and that lighting conditions are sufficient for accurate hand tracking.
+---
 
-The accuracy of number recognition can be improved by training a more precise machine learning model.
